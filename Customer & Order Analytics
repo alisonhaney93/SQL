@@ -16,7 +16,7 @@ WHERE product = "iPhone";
 SELECT acctnum
 FROM BIT_DB.customers AS customers
 INNER JOIN BIT_DB.FebSales AS feb
-ON customers.order_id = feb.orderid
+ON customers.order_id = feb.orderid;
 
 # 4. Which product was the cheapest one sold in January, and what was the price?
 
@@ -44,4 +44,13 @@ AVG(quantity*price) AS avg_spent
 FROM BIT_DB.FebSales AS feb
 LEFT JOIN BIT_DB.customers AS customers
 ON feb.orderid = customers.orderid
-WHERE feb.quantity > 2
+WHERE feb.quantity > 2;
+
+# 8. List all the products sold in Los Angeles in February, and include how mnay of each were sold.
+
+-- List all the products sold in Los Angeles in February, and include how many of each were sold.
+
+SELECT DISTINCT product, SUM(quantity)
+FROM BIT_DB.FebSales AS feb
+WHERE feb.location LIKE "%Los Angeles%"
+GROUP BY product;
