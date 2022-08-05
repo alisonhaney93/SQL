@@ -1,0 +1,79 @@
+-- Create a celebrity database
+
+CREATE TABLE famous_people (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, profession TEXT);
+
+INSERT INTO famous_people (name, profession) VALUES
+("Prince William", "Prince"),
+("Kate Middleton", "Duchess"),
+("Justin Timberlake", "Musician"),
+("Jessica Biel", "Actor"),
+("Maggie Gyllenhaal", "Actor"),
+("Peter Sarsgaard", "Actor"),
+("Freddie Prinze Jr.", "Actor"),
+("Sarah Michelle Gellar", "Actor"),
+("Tina Turner", "Musician"),
+("Erwin Bach", "Music producer"),
+("Michael Douglass", "Actor"),
+("Catherine Zeta-Jones", "Actor"),
+("Elizabeth Banks", "Actor"),
+("Max Handelman", "Sportswriter"),
+("Lisa Kudrow", "Actor"),
+("Michael Stern", "Sympony conductor"),
+("Matt Damon", "Actor"),
+("Luciana Barroso", "NULL"),
+("Harrison Ford", "Actor"),
+("Calista Flockhart", "Actor"),
+("Blake Lively", "Actor"),
+("Ryan Reynolds", "Actor"),
+("Salma Hayek", "Actor"),
+("Francois-Henri Pinault", "Businessman"),
+("Eva Mendes", "Actor"),
+("Ryan Gosling", "Actor"),
+("Julia Roberts", "Actor"),
+("Daniel Moder", "Cinematographer"),
+("Beyonce Knowles", "Musician"),
+("Jay-Z", "Musician"),
+("Dax Shepard", "Actor"),
+("Kristen Bell", "Actor"),
+("Emily Blunt", "Actor"),
+("John Krasinski", "Director"),
+("Dave Franco", "Actor"),
+("Alison Brie", "Actor"),
+("Jamie Lee Curtis", "Actor"),
+("Christopher Guest", "Director"),
+("Nicole Kidman", "Actor"),
+("Keith Urban", "Musician");
+
+-- Create a marriages database using the PKs in the celebrity database
+
+CREATE TABLE marriages (id INTEGER PRIMARY KEY AUTOINCREMENT, spouse1_id INTEGER, spouse2_id INTEGER);
+
+INSERT INTO marriages (spouse1_id, spouse2_id) VALUES
+(1, 2),
+(3, 4),
+(5, 6),
+(7, 8),
+(9, 10),
+(11, 12),
+(13, 14),
+(15, 16),
+(17, 18),
+(19, 20),
+(21, 22),
+(23, 24),
+(25, 26),
+(27, 28),
+(29, 30),
+(31, 32),
+(33, 34),
+(35, 36),
+(37, 38),
+(39, 40);
+
+-- Use multiple joins including a self-join in order to display the names of each celebrity next to the name of their spouse
+
+SELECT famous1.name, famous2.name FROM marriages
+JOIN famous_people AS famous1
+ON marriages.spouse1_id = famous1.id
+JOIN famous_people AS famous2
+ON marriages.spouse2_id = famous2.id;
