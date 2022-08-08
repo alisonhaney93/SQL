@@ -1,0 +1,104 @@
+# For this project, I downloaded Spotify (2021) data from Kaggle.
+# Then I created a table to insert Spotify data into.
+# Finally, I performed analytics on the data using SQL.
+
+# Creating the table for the BIT_DB database:
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+Then, I inserted the Spotify Data .csv file into the table.
+
+# Next, I explored the data using the following SQL queries by answering a variety of questions I developed about the data.
+
+# How many different artists are in the top 50 most popular Spotify songs?
+
+SELECT COUNT(DISTINCT artist_name)
+FROM BIT_DB.spotifydata;
+
+# Which artist had the most hits in 2021? (included limit of 2 since artists were tied for most number of hits)
+
+SELECT artist_name, COUNT(artist_name) as artist_hits
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+ORDER BY artist_hits DESC
+LIMIT 2;
+
+# What was the most common key in the top 50 most popular spotify songs?
+
+SELECT key, COUNT(key) AS key_occurence
+FROM BIT_DB.spotifydata
+GROUP BY key
+ORDER BY key_occurence DESC
+LIMIT 1;
+
+# What were the top 10 most popular songs and the names of the artists?
+
+SELECT track_name, artist_name, popularity
+FROM BIT_DB.Spotifydata
+ORDER BY popularity DESC
+LIMIT 10;
+
+# What were the top 10 most danceable songs and the names of the artists?
+
+SELECT track_name, artist_name, danceability
+FROM BIT_DB.Spotifydata
+ORDER BY danceability DESC
+LIMIT 10;
+
+# Are major or minor keys more common in 2021 Spotify hits? (see mode: major = 1 and minor = 0)
+
+SELECT mode, COUNT(mode) as mode_frequency
+FROM BIT_DB.Spotifydata
+GROUP BY mode
+ORDER BY mode_frequency;
+
+# What is the average, minimum, and maximum acousticness of the top 50 spotify songs?
+
+SELECT AVG(acousticness), MIN(acousticness), MAX(acousticness)
+FROM BIT_DB.spotifydata;
+
+# What is the most common time signature of popular songs on Spotify?
+
+SELECT time_signature, COUNT(time_signature) as ts_frequency
+FROM BIT_DB.spotifydata
+GROUP BY time_signature
+ORDER BY ts_frequency DESC
+LIMIT 1;
+
+# What was the length of the average Spotify hit song in minutes?
+
+SELECT AVG(duration_ms)/60000YU87 AS average_duration_minutes
+FROM BIT_DB.spotifydata;
+
+# What is the average, minimum, and maximum loudness 
+
+SELECT track_name, artist_name, energy
+FROM BIT_DB.spotifydata
+
+# What is the average popularity, danceability, and energy by artist and track?
+
+SELECT artist_name,
+track_name,
+AVG(popularity),
+AVG(danceability),
+AVG(energy)
+FROM BIT_DB.spotifydata
+GROUP BY artist_name, track_name;
