@@ -1,0 +1,37 @@
+# In this SQL, I create a table that contains made-up tweets from an imaginary user and use simple queries to modify parts of the table.
+
+# First, I created a table to store the app's data.
+
+CREATE TABLE user4926_tweets (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, time TEXT, content TEXT);
+
+# Then, I inserted a few example rows in the table.
+
+INSERT INTO user4926_tweets (id, date, time, content) VALUES (1, "2022-04-24", "7:49 PM", "Anyone have recommendations for a great seafood restaurant in the Baltimore area? I have been dreaming about crabcakes all week!");
+INSERT INTO user4926_tweets (id, date, time, content) VALUES (2, "2022-04-09", "8:52 AM", "To think I could have and should have been born as Beyonce's daughter... the audacity of the universe for cheating me of the life I deserve");
+INSERT INTO user4926_tweets (id, date, time, content) VALUES (3, "2022-02-06", "8:40 PM", "Promoted to the lead of my team today! Time to get sad that I am in a higher tax bracket now");
+INSERT INTO user4926_tweets (id, date, time, content) VALUES (4, "2022-01-23", "7:17 PM", "My bf just caught me eating shredded cheese directly from the bag with the fridge wide open... #RIP");
+INSERT INTO user4926_tweets (id, date, time, content) VALUES (5, "2022-01-22", "10:29 AM", "My boyfriend's company is taking us on an all-expense-paid trip because he had the most sales out of all the reps this year #omg #spoiled");
+INSERT INTO user4926_tweets (id, date, time, content) VALUES (6, "2022-01-18", "7:49 PM", "How to drop hints to my bf that I am ready to be engaged? But without seeming desperate #TIA");
+INSERT INTO user4926_tweets (id, date, time, content) VALUES (7, "2022-01-18", "10:01 PM", "Hmmmm would really thrive a lot more if I had s WFH job");
+INSERT INTO user4926_tweets (id, date, time, content) VALUES (8, "2022-01-15", "8:39 PM", "I have not had any time to play any video games lately and I am UPSET");
+INSERT INTO user4926_tweets (id, date, time, content) VALUES (9, "2022-01-15", "11:26 PM", "Water polo suggests the existence of fire, earth, and air polo #avatar #aang");
+INSERT INTO user4926_tweets (id, date, time, content) VALUES (10, "2021-11-06", "8:00 AM", "Sorry I can't hang out, I'm trying to convince my boyfriend that we do not need to get name-brand handsoap");
+
+# Use an UPDATE function to edit the data in one of your rows and then run a query to confirm that your table has been modified correctly
+
+UPDATE user4926_tweets SET content = "Hmmmm would really thrive a lot more if I had a WFH job" WHERE id = 7;
+SELECT * FROM user4926_tweets;
+
+# Use a DELETE function to eliminate one of your rows entirely and then run a qeury to confirm that your table has been modified correctly
+
+DELETE FROM user4926_tweets WHERE id = 6;
+SELECT * FROM user4926_tweets;
+
+# Run a query to find all tweets that contain a hashtag (#)
+
+SELECT * FROM user4926_tweets WHERE content LIKE '%#%';
+
+# Run a qeury to locate all tweets that contain a hashtag (#) AND contain information about the user's significant other
+
+SELECT * FROM user4926_tweets WHERE content LIKE '%#%' AND (content LIKE '%bf%' OR content LIKE '%boyfriend%');
+
