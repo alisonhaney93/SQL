@@ -1,0 +1,45 @@
+--Create a store database
+
+CREATE TABLE grocery_store (id INTEGER PRIMARY KEY, item TEXT, type TEXT, dollars_per_item INTEGER, stock INTEGER);
+
+INSERT INTO grocery_store VALUES
+
+(1, "bananas", "fruit", 1, 50),
+(2, "tomatoes", "vegetable", 1.50, 30),
+(3, "chocolate bars", "candy", 3, 23),
+(4, "broccoli", "vegetable", .75, 34),
+(5, "milk", "dairy", 4, 20),
+(6, "yogurt", "dairy", 1.50, 19),
+(7, "apples", "fruit", 2.25, 38),
+(8, "lemonade", "beverages", 3.75, 14),
+(9, "cookies", "snacks", 4, 28),
+(10, "coffee", "beverages", 7.50, 9),
+(11, "fish", "meat", 5.50, 17),
+(12, "jolly ranchers", "candy", 4, 13),
+(13, "potato chips", "snacks", 2.50, 37),
+(14, "pears", "fruit", 1.75, 26),
+(15, "chicken breast", "meat", 7, 30),
+(16, "orange juice", "beverages", 4.50, 14),
+(17, "brussels sprouts", "vegetable", 2.50, 16),
+(18, "lemons", "fruit", 1.25, 18),
+(19, "gumballs", "candy", .25, 67),
+(20, "bacon", "meat", 8, 7);
+
+--Show all items from the grocery store table
+SELECT * FROM grocery_store ORDER BY dollars_per_item;
+
+--Show all the different types of items available at the grocery store
+SELECT DISTINCT type FROM grocery_store;
+
+--Show the maximum item cost and the name of the item from each item type
+SELECT type, MAX(dollars_per_item) as "price in USD", item as "highest selling item" from grocery_store GROUP BY type;
+
+--Show the maximum possible sales made for each category if the grocery store were to sell its entire stock of selections
+SELECT type, SUM(stock*dollars_per_item) as "sales per type" FROM grocery_store GROUP BY type;
+
+--Show the total sum of sales made if the grocery store sold its entire stock of selections
+WITH sales_per_type AS (
+
+SELECT type, SUM(stock*dollars_per_item) as "sales per type" FROM grocery_store GROUP BY type)
+
+SELECT SUM("sales per type") FROM sales_per_type;
