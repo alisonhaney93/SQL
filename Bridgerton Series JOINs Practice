@@ -1,0 +1,77 @@
+-- Create a table that has the main cast of the Bridgerton series.
+
+CREATE TABLE bridgerton_cast (id INTEGER PRIMARY KEY, fullname TEXT, age INTEGER, height_inches INTEGER, gender TEXT);
+
+INSERT INTO bridgerton_cast VALUES (1, "Phoebe Dynevor", 28, 64.75, "F");
+INSERT INTO bridgerton_cast VALUES (2, "Rege-Jean Page", 35, 71, "M");
+INSERT INTO bridgerton_cast VALUES (3, "Jonathan Bailey", 35, 71, "M");
+INSERT INTO bridgerton_cast VALUES (4, "Ruth Gemmell", 55, 67, "F");
+INSERT INTO bridgerton_cast VALUES (5, "Luke Thompson", 34, 71, "M");
+INSERT INTO bridgerton_cast VALUES (6, "Luke Newton", 30, 72, "M");
+INSERT INTO bridgerton_cast VALUES (7, "Claudia Jessie", 33, 66, "F");
+INSERT INTO bridgerton_cast VALUES (8, "Ruby Stokes", 22, 65, "F");
+INSERT INTO bridgerton_cast VALUES (9, "Will Tilston", 16, 62, "M");
+INSERT INTO bridgerton_cast VALUES (10, "Florence Hunt", 16, 61, "F");
+INSERT INTO bridgerton_cast VALUES (11, "Nicola Coughlan", 36, 61, "F");
+INSERT INTO bridgerton_cast VALUES (12, "Adoja Andoh", 60, 64, "F");
+INSERT INTO bridgerton_cast VALUES (13, "Ruby Barker", 26, 66, "F");
+INSERT INTO bridgerton_cast VALUES (14, "Golda Rosheuvel", 53, 67, "F");
+INSERT INTO bridgerton_cast VALUES (15, "Polly Walker", 57, 66, "F");
+INSERT INTO bridgerton_cast VALUES (16, "Kathryn Drysdale", 41, 61.5, "F");
+INSERT INTO bridgerton_cast VALUES (17, "Martins Imhangbe", 31, 75, "M");
+INSERT INTO bridgerton_cast VALUES (18, "Sabrina Bartlett", 31, 61.75, "F");
+INSERT INTO bridgerton_cast VALUES (19, "Simone Ashley", 28, 65, "F");
+INSERT INTO bridgerton_cast VALUES (20, "Charithra Chandran", 26, 63, "F");
+INSERT INTO bridgerton_cast VALUES (21, "Shelly Conn", 46, 65, "F");
+INSERT INTO bridgerton_cast VALUES (22, "Rupert Young", 45, 75.25, "M");
+INSERT INTO bridgerton_cast VALUES (23, "Calam Lynch", 28, 70, "M");
+INSERT INTO bridgerton_cast VALUES (24, "Rupert Evans", 46, 70, "M");
+INSERT INTO bridgerton_cast VALUES (25, "James Fleet", 71, 72, "M");
+
+-- Create a table that has all of the main characters in the Bridgerton series.
+
+CREATE TABLE bridgerton_characters (id INTEGER PRIMARY KEY, char_name TEXT, actor_id INTEGER, char_title TEXT, season_introduced TEXT);
+
+INSERT INTO bridgerton_characters VALUES (1, "Daphne Bridgerton", 1, "Duchess", "Season 1");
+INSERT INTO bridgerton_characters VALUES (2, "Simon Basset", 2, "Duke", "Season 1");
+INSERT INTO bridgerton_characters VALUES (3, "Anthony Bridgerton", 3, "Viscount", "Season 1");
+INSERT INTO bridgerton_characters VALUES (4, "Violet Bridgerton", 4, "Dowager Viscountess", "Season 1");
+INSERT INTO bridgerton_characters VALUES (5, "Benedict Bridgerton", 5, "Viscount", "Season 1");
+INSERT INTO bridgerton_characters VALUES (6, "Colin Bridgerton", 6, "NULL", "Season 1");
+INSERT INTO bridgerton_characters VALUES (7, "Eloise Bridgerton", 7, "NULL", "Season 1");
+INSERT INTO bridgerton_characters VALUES (8, "Francesca Bridgerton", 8, "NULL", "Season 1");
+INSERT INTO bridgerton_characters VALUES (9, "Gregory Bridgerton", 9, "NULL", "Season 1");
+INSERT INTO bridgerton_characters VALUES (10, "Hyacinth Bridgerton", 10, "NULL", "Season 1");
+INSERT INTO bridgerton_characters VALUES (11, "Penelope Featherington", 11, "NULL", "Season 1");
+INSERT INTO bridgerton_characters VALUES (12, "Agatha Danbury", 12, "Lady", "Season 1");
+INSERT INTO bridgerton_characters VALUES(13, "Marina Thompson", 13, "NULL", "Season 1");
+INSERT INTO bridgerton_characters VALUES (14, "Charlotte Frederick", 14, "Queen", "Season 1");
+INSERT INTO bridgerton_characters VALUES (15, "Portia Featherington", 15, "Lady", "Season 1");
+INSERT INTO bridgerton_characters VALUES (16, "Genevieve Delacroix", 16, "Madame", "Season 1");
+INSERT INTO bridgerton_characters VALUES (17, "Will Mondrich", 17, "NULL", "Season 1");
+INSERT INTO bridgerton_characters VALUES (18, "Siena Rosso", 18, "NULL", "Season 1");
+INSERT INTO bridgerton_characters VALUES (19, "Kate Sharma", 19, "Viscountess", "Season 2");
+INSERT INTO bridgerton_characters VALUES (20, "Adwina Sharma", 20, "Viscountess", "Season 2");
+INSERT INTO bridgerton_characters VALUES (21, "Mary Sharma", 21, "Lady", "Season 2");
+INSERT INTO bridgerton_characters VALUES (22, "Jack Featherington", 22, "Lord", "Season 2");
+INSERT INTO bridgerton_characters VALUES (23, "Theo Sharpe", 23, "NULL", "Season 2");
+INSERT INTO bridgerton_characters VALUES (24, "Edmund Bridgerton", 24, "Lord", "Season 2");
+INSERT INTO bridgerton_characters VALUES (25, "George Frederick", 25, "King", "Season 1");
+
+-- Join the bridgerton_cast and bridgerton_characters tables so that each actor is next to the character they play in the series.
+
+SELECT bridgerton_characters.char_name AS character_name, bridgerton_cast.fullname AS played_by FROM bridgerton_characters JOIN bridgerton_cast ON bridgerton_characters.actor_id = bridgerton_cast.id;
+
+-- Create a third table that will pair up all of the characters from Bridgerton that are a couple.
+
+CREATE TABLE bridgerton_couples (id INTEGER PRIMARY KEY, char1_id INTEGER, char2_id INTEGER);
+
+INSERT INTO bridgerton_couples VALUES (1, 1, 2), (2, 6, 11), (3, 3, 19), (4, 4, 24), (5, 7, 23), (6, 14, 25);
+
+-- Use a self-join that will return the names of the characters paired together in the bridgerton_couples table next to one another (if applicable, do not return any NULL values).
+
+SELECT a.char_name AS character_name, b.char_name AS partner_name FROM bridgerton_couples JOIN bridgerton_characters A ON a.actor_id = bridgerton_couples.char1_id JOIN bridgerton_characters B ON b.actor_id = bridgerton_couples.char2_id;
+
+-- Find the average height of the actors in the Bridgerton series in feet and separated by gender.
+
+SELECT gender, ROUND(avg(height_inches)/12,2) AS avg_height FROM bridgerton_cast GROUP BY gender ORDER BY gender DESC;
